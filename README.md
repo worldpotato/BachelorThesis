@@ -4,12 +4,6 @@ It is based on the KOMA scripts and aims for documents with mathematical and sof
 
 You can find an example in the current [releases](https://github.com/worldpotato/HM-LaTeX-Template/releases "releases").
 
-# Build Status
-
-[![Build Status](https://travis-ci.org/worldpotato/LaTeX-Template.svg?branch=master)](https://travis-ci.org/worldpotato/LaTeX-Template)
-
-[![Latest Tag](https://badgen.net/github/tag/worldpotato/LaTeX-Template)](https://badgen.net/github/tag/worldpotato/LaTeX-Template)
-
 # Structure
 
 ## Bibtex file
