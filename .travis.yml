@@ -3,10 +3,7 @@ language: generic
 before_install:
     - sudo apt-get install texlive-full
 install:
-    - pdflatex 00_master.tex
-    - bibtex 00_master
-    - pdflatex 00_master.tex
-    - pdflatex 00_master.tex
+    - latexmk -pdf 00_master.tex
 deploy:
     provider: releases
     api_key: $GITHUB_TOKEN
