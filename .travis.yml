@@ -28,20 +28,6 @@ jobs:
             cleanup: false
             on:
               all_branches: true
-    - stage: deploy-master
-      if: branch = master AND type = cron
-      before_deploy:
-            - git config --local user.name "Travis"
-            - git config --local user.email "fstrobel@hm.edu"
-            - export TRAVIS_TAG=release-$(date +%Y%m%d)
-            - git tag release-$(date +%Y%m%d)
-      deploy:
-            provider: releases
-            token: $GITHUB_TOKEN
-            file: ./00_master.pdf
-            cleanup: false
-            on:
-              all_branches: true
     - stage: deploy-tag
       if: tag IS present
       deploy:
