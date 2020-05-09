@@ -43,10 +43,11 @@ jobs:
             on:
               all_branches: true
     - stage: deploy-tag
+      if: tag IS present
       deploy:
         provider: releases
         api_key: $GITHUB_TOKEN
-        file: ./00_master.tex
+        file: ./00_master.pdf
         cleanup: false
         on:
           tags: true
