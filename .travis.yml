@@ -1,21 +1,48 @@
 language: generic
 os: linux
 dist: bionic
+
 # Dependency of the minted package
-before_install:
-    - sudo apt-get install texlive-full
-install:
-    - latexmk -pdf 00_master.tex
-before_deploy:
-      # Set up git user name and tag this commit
-      - git config --local user.name "Travis"
-      - git config --local user.email "fstrobel@hm.edu"
-      - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-      - git tag $TRAVIS_TAG
-deploy:
-    provider: releases
-    api_key: $GITHUB_TOKEN
-    file: ./00_master.pdf
-    cleanup: false
-    on:
-        tags: true
+jobs:
+  include:
+    - stage: Install
+      before_install:
+        - sudo apt-get install texlive-full
+      install:
+        - latexmk -pdf 00_master.tex
+    - stage: deploy-develop
+      if: branch = develop
+      before_deploy:
+            - git config --local user.name "Travis"
+            - git config --local user.email "fstrobel@hm.edu"
+            - export TRAVIS_TAG=daily-$(date +%Y%m%d)
+            - git tag daily-$(date +%Y%m%d)
+      deploy:
+            provider: releases
+            token: $GITHUB_TOKEN
+            file: ./00_master.pdf
+            cleanup: false
+            on:
+              all_branches: true
+    - stage: deploy-master
+      if: branch = master
+      before_deploy:
+            - git config --local user.name "Travis"
+            - git config --local user.email "fstrobel@hm.edu"
+            - export TRAVIS_TAG=release-$(date +%Y%m%d)
+            - git tag release-$(date +%Y%m%d)
+      deploy:
+            provider: releases
+            token: $GITHUB_TOKEN
+            file: ./00_master.pdf
+            cleanup: false
+            on:
+              all_branches: true
+    - stage: deploy-tag
+      deploy:
+        provider: releases
+        api_key: $GITHUB_TOKEN
+        file: ./00_master.tex
+        cleanup: false
+        on:
+          tags: true
