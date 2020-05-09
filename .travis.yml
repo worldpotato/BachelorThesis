@@ -15,7 +15,7 @@ jobs:
       install:
         - latexmk -pdf 00_master.tex
     - stage: deploy-develop
-      if: branch = develop
+      if: branch = develop AND type = cron
       before_deploy:
             - git config --local user.name "Travis"
             - git config --local user.email "fstrobel@hm.edu"
@@ -29,7 +29,7 @@ jobs:
             on:
               all_branches: true
     - stage: deploy-master
-      if: branch = master
+      if: branch = master AND type = cron
       before_deploy:
             - git config --local user.name "Travis"
             - git config --local user.email "fstrobel@hm.edu"
