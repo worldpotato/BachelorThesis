@@ -20,10 +20,9 @@ jobs:
         - sudo apt-get install texlive-full
       install:
         - latexmk -pdf 00_master.tex
-        - script: mv 00_master.tex ~/$TRAVIS_BUILD_NUMBER/00_master.tex
       after_success:
-        - 
         - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER
+        - script: mv 00_master.pdf ~/$TRAVIS_BUILD_NUMBER/00_master.pdf
     - stage: deploy-develop
       if: branch = develop AND type = cron
       before_deploy:
