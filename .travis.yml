@@ -18,9 +18,7 @@ jobs:
         - sudo apt-get install texlive-full
       install:
         - latexmk -pdf 00_master.tex
-        - mv 00_master.pdf ./output/.
-      after_success:
-        - mkdir ./output
+        - mv 00_master.pdf ./output/bachelor-thesis.pdf
     - stage: deploy-develop
       if: branch = develop AND type = cron
       before_deploy:
@@ -31,18 +29,16 @@ jobs:
       deploy:
         provider: releases
         token: $GITHUB_TOKEN
-        file: ./output/00_master.pdf
+        file: ./output/bachelor-thesis.pdf
         skip_cleanup: true
         on:
           all_branches: true
-      after_success:
-        - mv 00_master.pdf ./output/.
     - stage: deploy-tag
       if: tag IS present
       deploy:
         provider: releases
         api_key: $GITHUB_TOKEN
-        file: ./output/00_master.pdf
+        file: ./output/bachelor-thesis.pdf
         skip_cleanup: true
         on:
           tags: true
