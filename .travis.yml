@@ -2,16 +2,14 @@ language: generic
 os: linux
 dist: bionic
 
+cache:
+  directories:
+    - ./output
+
 notifications:
   email:
     on_success: never
     on_failure: always
-
-before_install:
-  - pyenv global 3.7.1
-  - pip install -U pip
-  - pip install awscli
-  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
 
 jobs:
   include:
@@ -20,9 +18,9 @@ jobs:
         - sudo apt-get install texlive-full
       install:
         - latexmk -pdf 00_master.tex
+        - mv 00_master.pdf ./output/.
       after_success:
-        - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER
-        - script: mv 00_master.pdf ~/$TRAVIS_BUILD_NUMBER/00_master.pdf
+        - mkdir ./output
     - stage: deploy-develop
       if: branch = develop AND type = cron
       before_deploy:
@@ -30,22 +28,21 @@ jobs:
         - git config --local user.email "fstrobel@hm.edu"
         - export TRAVIS_TAG=daily-$(date +%Y%m%d)
         - git tag daily-$(date +%Y%m%d)
-        - aws s3 sync s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
       deploy:
         provider: releases
         token: $GITHUB_TOKEN
-        file: ~/$TRAVIS_BUILD_NUMBER/00_master.pdf
+        file: ./output/00_master.pdf
         skip_cleanup: true
         on:
           all_branches: true
+      after_success:
+        - mv 00_master.pdf ./output/.
     - stage: deploy-tag
       if: tag IS present
-      before_deploy:
-        - aws s3 sync s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
       deploy:
         provider: releases
         api_key: $GITHUB_TOKEN
-        file: ~/$TRAVIS_BUILD_NUMBER/00_master.pdf
+        file: ./output/00_master.pdf
         skip_cleanup: true
         on:
           tags: true
