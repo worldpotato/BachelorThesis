@@ -1,13 +1,39 @@
 language: generic
+os: linux
+dist: bionic
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
 # Dependency of the minted package
-before_install:
-    - sudo apt-get install texlive-full
-install:
-    - latexmk -pdf 00_master.tex
-deploy:
-    provider: releases
-    api_key: $GITHUB_TOKEN
-    file: ./00_master.pdf
-    skip_cleanup: true
-    on:
-        tags: true
+jobs:
+  include:
+    - stage: Install
+      before_install:
+        - sudo apt-get install texlive-full
+      install:
+        - latexmk -pdf 00_master.tex
+    - stage: deploy-develop
+      if: branch = develop AND type = cron
+      before_deploy:
+            - git config --local user.name "Travis"
+            - git config --local user.email "fstrobel@hm.edu"
+            - export TRAVIS_TAG=daily-$(date +%Y%m%d)
+            - git tag daily-$(date +%Y%m%d)
+      deploy:
+            provider: releases
+            token: $GITHUB_TOKEN
+            file: ./00_master.pdf
+            cleanup: false
+            on:
+              all_branches: true
+    - stage: deploy-tag
+      if: tag IS present
+      deploy:
+        provider: releases
+        api_key: $GITHUB_TOKEN
+        file: ./00_master.pdf
+        cleanup: false
+        on:
+          tags: true
