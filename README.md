@@ -1,6 +1,7 @@
-Master: [![Build Status](https://travis-ci.org/worldpotato/BachelorThesis.svg?branch=master)](https://travis-ci.org/worldpotato/BachelorThesis)
 
-Develop: [![Build Status](https://travis-ci.org/worldpotato/BachelorThesis.svg?branch=develop)](https://travis-ci.org/worldpotato/BachelorThesis)
+| Master | Develop |
+|========|=========|
+| [![Build Status](https://travis-ci.org/worldpotato/BachelorThesis.svg?branch=master)](https://travis-ci.org/worldpotato/BachelorThesis) | [![Build Status](https://travis-ci.org/worldpotato/BachelorThesis.svg?branch=develop)](https://travis-ci.org/worldpotato/BachelorThesis) |
 
 # This project contains the LaTeX source for my bachelor thesis
 
