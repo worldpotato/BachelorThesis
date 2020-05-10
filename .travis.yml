@@ -6,7 +6,13 @@ notifications:
   email:
     on_success: never
     on_failure: always
-# Dependency of the minted package
+
+before_install:
+  - pyenv global 3.7.1
+  - pip install -U pip
+  - pip install awscli
+  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
+
 jobs:
   include:
     - stage: Install
@@ -14,26 +20,33 @@ jobs:
         - sudo apt-get install texlive-full
       install:
         - latexmk -pdf 00_master.tex
+        - script: mv 00_master.tex ~/$TRAVIS_BUILD_NUMBER/00_master.tex
+      after_success:
+        - 
+        - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER
     - stage: deploy-develop
       if: branch = develop AND type = cron
       before_deploy:
-            - git config --local user.name "Travis"
-            - git config --local user.email "fstrobel@hm.edu"
-            - export TRAVIS_TAG=daily-$(date +%Y%m%d)
-            - git tag daily-$(date +%Y%m%d)
+        - git config --local user.name "Travis"
+        - git config --local user.email "fstrobel@hm.edu"
+        - export TRAVIS_TAG=daily-$(date +%Y%m%d)
+        - git tag daily-$(date +%Y%m%d)
+        - aws s3 sync s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
       deploy:
-            provider: releases
-            token: $GITHUB_TOKEN
-            file: ./00_master.pdf
-            skip_cleanup: true
-            on:
-              all_branches: true
+        provider: releases
+        token: $GITHUB_TOKEN
+        file: ~/$TRAVIS_BUILD_NUMBER/00_master.pdf
+        skip_cleanup: true
+        on:
+          all_branches: true
     - stage: deploy-tag
       if: tag IS present
+      before_deploy:
+        - aws s3 sync s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
       deploy:
         provider: releases
         api_key: $GITHUB_TOKEN
-        file: ./00_master.pdf
+        file: ~/$TRAVIS_BUILD_NUMBER/00_master.pdf
         skip_cleanup: true
         on:
           tags: true
