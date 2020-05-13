@@ -2,27 +2,21 @@
 
 \section{Motivation}\label{sec:motivation}
 
-Mobile mapping solutions often use multiple sensors and combine the measurements of these sensors to a map and position.
-Common sensors for mobile mapping solutions are laser scanner, stereo camera and \ac{IMU}.
+Mobile mapping solutions often use multiple sensors and combine the measurements of these sensors to a map and a position inside this map.
+Common sensors are laser scanner, stereo camera and \ac{IMU}.
 But also \ac{GNSS} receiver are often used for outdoor applications.
-The sensors provide a wide range of different data.
-And using the provided data for positioning and map building requires different methods.
+From two-dimensional distance measurements from laser scanner to the orientation, velocity and acceleration from an \ac{IMU}, these sensors provide a wide range of different data.
+To enhance the amount of data types and methods a thermal camera can be added to the mobile mapping system.
+This additional sensor gives possibilities to use further methods of photogrammetry.
 
-In universities different methods to process sensor data are taught during different lectures from different professors and tutors.
-And many of them use mobile mapping solutions to give their students a hands-on experience to these methods.
-Others add sensors to customize the multi sensor network for their needs.
-One mentionable example for a additional sensor is a \ac{IR} camera to use further methods of photogrammetry in a mobile mapping solution.
-But mobile mapping platforms are not only used for teaching methods to students but also for research in different geodesy disciplines.
-Some of the recent researches are mentioned in section related work[\ref{sec:related-work}].
+Therefore a lot of different methods are used to achieve the goal of creating a map and locate the own position in this map.
+The amount of different methods offer many possibilities for tutors and professors to give their students a hands-on experience of what they learned in the last lessons.
+But the sensor systems are also used in student projects, bachelor and master theses.
+Mostly with different approaches and different outcomes.
 
-Sometimes different scientists try to merge their research to one bigger project.
-The process of merging two different works is often very complex because the two implementation differs a lot.
-But not only the implementation of similar methods can differ from project to project, also the defined input and output format can be different.
-As different two projects are as bigger the complexity of merging gets.
-And the higher the complexity is, the higher is the chance to make failures what can cost a lot of time for debugging.
-
-Working together on one project always means to define well known interfaces between the different parts.
-Only setting up the interfaces can take a lot of time.
+It takes a lot of time to understand the implementation of different projects.
+And the different approaches lead to more complexity while setting up new projects or adapting an old project for new lectures which raise the possibly to make errors.
+Another side effect of different outcomes is the difficulty to combine two projects to one bigger project.
 
 \section{Related Work}\label{sec:related-work}
 Developing Intelligent Environments: A Development Tool Chain for Creation, Testing and Simulation of Smart and Intelligent Environments\cite{roalter2011developing}
