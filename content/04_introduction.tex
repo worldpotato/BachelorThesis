@@ -11,7 +11,7 @@ And using the provided data for positioning and map building requires different 
 In universities different methods to process sensor data are taught during different lectures from different professors and tutors.
 And many of them use mobile mapping solutions to give their students a hands-on experience to these methods.
 Others add sensors to customize the multi sensor network for their needs.
-One mentionable example for a additional sensor is a \ac{IR} camera to use further methods of photogrammetry in a mobile mapping solution.
+One mentionable example for a additional sensor is a \ac{TIR} camera to use further methods of photogrammetry in a mobile mapping solution or detect further features.
 But mobile mapping platforms are not only used for teaching methods to students but also for research in different geodesy disciplines.
 Some of the recent researches are mentioned in section related work[\ref{sec:related-work}].
 
@@ -26,17 +26,47 @@ Only setting up the interfaces can take a lot of time.
 
 \section{Related Work}\label{sec:related-work}
 The following section should give an overview of related work and the state of the art of methods used by mobile mapping systems with thermal data acquiring.
-Most mobile mapping systems use either \ac{GNSS} or \ac{SLAM} to determine their location, depending on their environment.
-Especially in more complex outdoor environments, the general \ac{SLAM} method is now a well understood and established part of robotics but there are still many particular issues to overcome\cite{durrant-Whyte2006}.
 
-Developing Intelligent Environments: A Development Tool Chain for Creation, Testing and Simulation of Smart and Intelligent Environments\cite{roalter2011developing}
+\ac{MMS} functions as tool to collect complete spatial information in a fast, efficient and cost-efficient way \cite{El-Sheimy2005}.
+Most \ac{MMS} use either \ac{GNSS} or \ac{SLAM} to determine their location, depending on their environment and available sensors.
+The method of \ac{SLAM} is now a well understood and established part of robotics but there are still many particular issues to overcome, especially in complex environments\cite{durrant-Whyte2006}.
+The necessary measurements are often done by multiple sensors which measurements are fused to one dataset.
+One important sensor for this is the \ac{LiDAR} sensor.
+But state of the art 3D laser scanner e.g. Z+F IMAGER\circledR{} 5006, 3D Laser Scanner, which are used for high quality demanding projects\cite{Abmayr_calibrationand}, doesn't satisfy the mobility which is required for mobile mapping solutions.
+A less accurate alternative to 3D laser scanner are stereo cameras which are much smaller.
+Stereo cameras uses well known methods of photogrammetry and computer vision to reconstruct 3D information from image data\cite{dagstuhl-11-mayer}\cite{Pollefeys07}
 
+And smaller 2D laser scanner only provide information about the plane at one height, which can lead to problems when only the legs of a table are detected, but not the surface.
+A combination of a smaller 2D laser scanner and a stereo camera can be used to avoid these misleading measurements\cite{DBLP:journals/jise/LinCDW12}.
+
+Stereo cameras working with RGB images which is feasible to create an 3D model of the environment.
+But not all features of the environment can be detected by RGB sensors e.g. the temperature.
+These features can be measured by \ac{TIR} cameras
+
+Miknis at al discuss how the open source library \ac{PCL} can be used to calculate the pointcloud from a disparity image in near real-time\cite{miknis2015}.
+
+The distributed system formed by sensors, actors and computing units need a significant amount of knowledge and time to create.
+Using a well known middleware which is flexible and robust can reduce the time between the start of an project to the actual research.
+Roalter et al\cite{roalter2011developing} identifies \ac{ROS} as a middleware for systems with different sensors similar to mobile mapping systems.
+Since then \ac{ROS} developed to a quasi-standard in different industries e.g.\ automotive and robotics but also in research it gains popularity.
+But other than the name implies \ac{ROS} is not a traditional operating system.
+Wrigley et al describe \ac{ROS} as a framework which is capable to be used for a lot of different hardware platforms.
+Thereby they discuss how \ac{ROS} provides a communication layer between different host operating systems and which tools \ac{ROS} provides to develop software for robotics.\cite{Quigley2009ROSAO}
+
+
+E.g.\ in \ac{ROS} a generalized implementation \todo{use this}
 Robotik-lokalization\cite{MooreStouchKeneralizedEkf2014}
 
-ROS:\@ an open source robot operating system\cite{Quigley2009ROSAO}
-
-Syncron Koregistratrion\cite{Frank2019SyncKoreg}
+Syncron Koregistratrion\cite{Frank2019SyncKoreg} \todo{use this}
 
 \section{Aim of the Work}\label{sec:aimOfTheWork}
+With this work I want to show how a what it needs to develop a software environment for mobile mapping solutions.
+These intelligent systems should be used to not only collect the spatial information but also the temperature of the environment.
+
 \section{Structure of the Work}\label{sec:structure}
 
+To understand what kind of technology is used I want to explain the fundamentals [\ref{fundamentals}] of the sensors and what mobile mapping means.
+Afterwards the fundamentals get real and the used components [\ref{usedcomponents}] get explained.
+Followed by a deep insight into the realization, further in how the data are acquired, visualized and distributed to all subscribers.
+The online and offline processing is discussed in after the acquisition.
+As a last step the results are discussed together with further options.
