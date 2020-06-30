@@ -1,5 +1,53 @@
 \chapter{Fundamentals}\label{ch:fundamentals}
-Hier werden evtl noch ein paar Themen hinzukommen.
+In this chapter should be explained how the used sensors work and what they are used for.
+Furthermore the principals of creating multidimensional maps with mobile systems are discussed.
 \section{Messurement Principles}\label{sec:messurementPrinciples}
+Every sensor has different advantages and disadvantages.
+To overcome the disadvantages of one sensor the advantages of another sensor can be used.
+The characteristics of each sensor are presented on the basis of their functioning.
+\subsection{LiDAR}\label{ssec:lidar}
+\ac{LiDAR} sensors measures the range to a light reflecting object by sending out a pulse of directed light and measure the time until the reflection comes back.
+Using a static laser beam allows only getting a range in one direction, but adding one or two movable mirrors allows to scan in two respective three dimensions. \todo{add source, image and formula for range calculation}
+
+Something to the used light.\todo{need to be more precise}
+
+This method bases on the reflection of the laser light but not all materials reflect all of the laser beam which leads to multiple echoes.
+These echoes can be used to "look through" some materials like leaves. \todo{add source}
+
+The range measurements are highly accurate but the more dimensions the more time is needed for one full measurement.
+E.g. the Z+F PROFILER\circledR{} 9012\todo{add source} needs $20.41\si{ms}$ for a 2D scan but the Z+F IMAGER\circledR{} 5016 needs at least $22\si{s}$.
+
+The output of a \ac{LiDAR} sensor depends on the number of dimensions they measure.
+All of them measure a distance but for each additional dimension one angle is added.
+But in case of 3D scanner the output format is often a 2.5D image.
+
+\subsection{Thermal Camera}\label{ssec:thermalCamera}
+\ac{TIR} cameras work like \cite{Vollmer2017}
+
+\subsection{Stereo Camera}\label{ssec:stereoCamera}
+Stereo Cameras are typical two calibrated high definition RGB cameras observing the same scene.
+For mobile mapping systems these two cameras are often arranged at the same horizontal plane with a distance of $10-12\si{cm}$.
+This distance is named Baseline $B$.
+Due to the distance between the two cameras each of them sees two slightly different pictures with different angles to the observed objects.
+Because each cameras picture is distorted, each camera need a intrinsic calibration and to bring the cameras together they need a extrinsic calibration. \todo{better wording}
+After the calibration the pictures can be rectified to proceed with matching single objects in the pictures.
+The matching is necessary to calculate the disparity map which represents the depth of each pixel.
+The matching between the objects can either be done manual or automatically while the manual matching is only possible in the post processing and the automatically can be used in real-time processing and post processing.
+\todo{find/create image}
+\todo{find primary source} 
+\todo{maybe equation for }
+
+\subsection{IMU}\label{ssec:imu}
+
+A basic \ac{IMU} measures the linear acceleration using accelerometer and gyroscope to detect the rotational rate.
+Typically these are measured over three perpendicular axis.
+Modern \ac{IMU}s also use magnetometer to set the heading and barometer to estimate the hight.
+Even more advanced \ac{IMU}s use \ac{GNSS} to improve their position with dead reckoning.
+
+With the information about the acceleration and the rotation it is possible to calculate the current pose. \todo{formular}
+
+Due the very fast accumulation of errors and the natural drift the pose is not reliable over a long term.
+But in a short time frame an \ac{IMU} can provide very accurate data in a high frequency. \todo{source}
+
 \section{Mobile Mapping}\label{sec:mobileMapping}
 
