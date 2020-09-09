@@ -1,6 +1,6 @@
 \chapter{Used Components}\label{ch:usedComponents}
 \section{Sensors}\label{sec:sensors}
-	\subsection{Thermal Camera}\label{ssec:thermalCamera}
+	\subsection{Thermal Camera}\label{ssec:HWthermalCamera}
 
 	\begin{table}[h]
 		\begin{tabular}{ll}
@@ -23,17 +23,94 @@
 	\caption{Technical specification Optris PI400}
 	\end{table}
 
-	\subsection{Stereo Camera}\label{ssec:stereoCamera}
+	\subsection{Stereo Camera}\label{ssec:HWstereoCamera}
 
-	\subsection{IMU}\label{ssec:IMU}
+	\subsection{IMU}\label{ssec:HWIMU}
 
-	\subsection{2D Laser Scanner}\label{ssec:laserScanner}
+	\subsection{LiDAR}\label{ssec:HWLiDAR}
 
 \section{ROS}\label{sec:ros}
-	\ac{ROS}
-	\subsection{Communication}\label{ssec:communication}
-	\subsection{Visualization}\label{ssec:visualization}
-	\subsection{Data Recording}\label{ssec:dataRecording}
+\ac{ROS} is initial developed by \ac{STAIR} as a prototype of a flexible and dynamic framework for personal robots.
+It then got extended by Willow Garage, a robotics incubator.
+The used open-source license enabled a wide range of developers and researchers to contribute, which boosted the rise of \ac{ROS}.
+Another big moment was the handover from Willow Garage to the new founded \ac{OSRF} in 2012 \cite{rosHistory}.
+
+Nowadays it is used in a wide range of hobby to scientific projects.
+But also the industry uses \ac{ROS} to develop different kind of robotic solutions.
+
+Even if \ac{ROS} has the term "Operating System" in the name it acts at the top of a classic operating system like GNU/Linux.
+The most used and best tested distribution to use with \ac{ROS} is Ubuntu.
+
+The framework can installed with a different amount of packages where the base installation only provides the necessary parts for building, packaging and communication.
+The desktop installation includes the base package with single tools to visualize the system and the desktop-full installation provides more software for simulation and prediction.
+The \ac{OSRF} also provides additional software which can be installed by demand.
+The different installation make it possible to keep the installation relatively small and run \ac{ROS} on small systems with low capacity. \todo{source}
+
+In the following, \ac{ROS} will be refer to the desktop-full installation and if additional packages are needed, they will be named.
+
+\subsection{Communication}\label{ssec:communication}
+
+The single nodes work together as a peer-to-peer network which is managed from one special node which is called the ROS-master.
+Also the communication is organized in topics which have a specific type of information.
+A node can publish into a topic, which mean it provides information, and subscribe a topic to get information.
+The number of subscribed topics and topics to publish are not limited, so that it is possible to get information from e.g. multiple sensors and compute them.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.30\textwidth]{img/ros_master/ros_master1.png}
+	\includegraphics[width=0.30\textwidth]{img/ros_master/ros_master2.png}
+	\includegraphics[width=0.30\textwidth]{img/ros_master/ros_master3.png}
+	\caption{The process how a camera node informs the ROS-master about the advertisement of information in the images topic and an other image viewer node subscribe to the same topic which leads to a peer-to-peer connection over the images topic.}
+    \label{fig:ros_master}
+\end{figure}
+
+The advertisement and subscriptions are managed by the ROS-Master which holds the information to establish the peer-to-peer connection.
+The first step to establish a successful connection is the notification of the master about the new topic.
+To that moment no data is send, because the topic has no subscriber.
+To use the information an other node needs to subscribe to the topic by informing the master about the subscription.
+Now the master gives the information to establish a peer-to-peer connection between the nodes and the information goes directly from one node to the other.
+Figure \ref{fig:ros_master} visualizes the process with an example how a camera node and image viewer node establish their connection \cite{rosMaster}.
+
+The exchanged information are structured in messages which have predefined structures.
+ROS provides messages for the most common usages but they can also be custom made.
+Each topic is strongly related to a message type, even if the type is not checked by the ROS-master.
+
+\begin{wrapfigure}[10]{O}{0.4\textwidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{img/ros_master/service.png}
+
+	\caption{A service invocation is not related to a topic and usually is not a constant flow of messages}
+    \label{fig:service_invocation}
+\end{wrapfigure}
+
+The publish/subscribe model supports a very flexible way to communicate and can easily scale to big many-to-many models.
+But for request/reply situations it is not appropriated.
+In these situations services can be used.
+They are defined by a pair of messages, one for the request and one for reply.
+The call of a service is similar to the connection with a topic except that it is just for the time between the request and the reply.
+But nodes can also establish a persistent connection to a service, which causes less robustness but a higher performance.
+
+\subsection{Visualization}\label{ssec:visualization}
+
+In ROS the visualization of data is realized in the tool named RVIZ.
+To the user RVIZ itself acts as a host application for different plugins where each message type has it's own plugin.
+For ROS RVIZ acts as a normal node so that the individual plugins needs to be configured to subscribe to the relevant topics and how the visualization should look like.
+
+RVIZ provides a number of plugins for the standard messages, but one can also develop their own plugins to visualize the custom messages.
+
+\subsection{Data Recording}\label{ssec:dataRecording}
+
+The ability to record and playback data is a crucial part of ROS.
+Since all available data in ROS are exchanged via topics one just needs to subscribe to the topics witch holds the data that should be recorded.
+The file format to save the records is typical a bag.
+A bag is created with a tool like rosbag.
+The tool subscribes to the wanted topics and writes the messages into the bag file, as they come.
+After finishing the recording a bag file can be palyed back with the same tool.
+For the rest of the ROS network it behaves like the messages are published by the original nodes, which makes the handling very easy.
+
+To make the process of writing and reading into bag files efficient the messages are not saved as messages but in the same representation as in the network transport layer.
+To have the ability to invest \ac{ROS} bags without installing \ac{ROS}, a programmatic API is provided to iterate over the messages in a \ac{ROS} bag \cite{rosBag}.
+
 
 \section{Matlab}\label{sec:matlab}
 	\subsection{ROS Toolbox}\label{ssec:rosToolbox}
