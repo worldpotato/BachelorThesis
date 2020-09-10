@@ -1,33 +1,35 @@
 \chapter{Used Components}\label{ch:usedComponents}
 \section{Sensors}\label{sec:sensors}
-	\subsection{Thermal Camera}\label{ssec:HWthermalCamera}
+\subsection{Thermal Camera}\label{ssec:HWthermalCamera}
 
-	\begin{table}[h]
-		\begin{tabular}{ll}
-			Optical resolution & 382 $\times$ 288 \\ \midrule
-			Detector & FPA, uncooled \SI{17}{\micro\meter} $\times$ \SI{17}{\micro\meter} \\ \midrule
-			Spectral range &  \SI{8}{\micro\meter} $-$ \SI{14}{\micro\meter} \\ \midrule
-			Temperature ranges & \begin{tabular}{@{}l@{}}\SI{-20}{\celsius} $-$ \SI{100}{\celsius}\\
-									\SI{0}{\celsius} $-$ \SI{250}{\celsius} \\
-									\SI{150}{\celsius}$-$ \SI{900}{\celsius}
-								 \end{tabular} \\ \midrule
-			Frame rate & \SI{80}{\hertz} \\ \midrule
-			Thermal sensitivity (NETD) & \begin{tabular}{@{}l@{}}
-				\SI{75}{\milli\kelvin} with \SI{29}{\degree} x \SI{}{\degree} FOV / F = 0,9 \\
-				\SI{75}{\milli\kelvin} with \SI{53}{\degree} x \SI{38}{\degree} FOV / F = 0,9 \\
-				\SI{75}{\milli\kelvin} with \SI{80}{\degree} x \SI{54}{\degree} FOV / F = 0,9 \\
-				\SI{0.1}{\kelvin} with \SI{18}{\degree} x \SI{14}{\degree} FOV / F = 1,1
-										\end{tabular} \\ \midrule
-										Accuracy & $\pm$ \SI{2}{\celsius} or $\pm${2}\% whichever is greater
-		\end{tabular}
-	\caption{Technical specification Optris PI400}
-	\end{table}
+\begin{table}[h]
+    \begin{tabular}{ll}
+        Optical resolution & 382 $\times$ 288 \\ \midrule
+        Detector & FPA, uncooled \SI{17}{\micro\meter} $\times$ \SI{17}{\micro\meter} \\ \midrule
+        Spectral range &  \SI{8}{\micro\meter} $-$ \SI{14}{\micro\meter} \\ \midrule
+        Temperature ranges & 
+        \begin{tabular}{@{}l@{}}\SI{-20}{\celsius} $-$ \SI{100}{\celsius}\\
+            \SI{0}{\celsius} $-$ \SI{250}{\celsius} \\
+            \SI{150}{\celsius}$-$ \SI{900}{\celsius}
+        \end{tabular} \\ \midrule
+        Frame rate & \SI{80}{\hertz} \\ \midrule
+        Thermal sensitivity (NETD) &
+        \begin{tabular}{@{}l@{}}
+            \SI{75}{\milli\kelvin} with \SI{29}{\degree} x \SI{}{\degree} FOV / F = 0,9 \\
+            \SI{75}{\milli\kelvin} with \SI{53}{\degree} x \SI{38}{\degree} FOV / F = 0,9 \\
+            \SI{75}{\milli\kelvin} with \SI{80}{\degree} x \SI{54}{\degree} FOV / F = 0,9 \\
+            \SI{0.1}{\kelvin} with \SI{18}{\degree} x \SI{14}{\degree} FOV / F = 1,1
+        \end{tabular} \\ \midrule
+        Accuracy & $\pm$ \SI{2}{\celsius} or $\pm${2}\% whichever is greater
+    \end{tabular}
+    \caption{Technical specification Optris PI400}
+\end{table}
 
-	\subsection{Stereo Camera}\label{ssec:HWstereoCamera}
+\subsection{Stereo Camera}\label{ssec:HWstereoCamera}
 
-	\subsection{IMU}\label{ssec:HWIMU}
+\subsection{IMU}\label{ssec:HWIMU}
 
-	\subsection{LiDAR}\label{ssec:HWLiDAR}
+\subsection{LiDAR}\label{ssec:HWLiDAR}
 
 \section{ROS}\label{sec:ros}
 \ac{ROS} is initial developed by \ac{STAIR} as a prototype of a flexible and dynamic framework for personal robots.
@@ -38,7 +40,7 @@ Another big moment was the handover from Willow Garage to the new founded \ac{OS
 Nowadays it is used in a wide range of hobby to scientific projects.
 But also the industry uses \ac{ROS} to develop different kind of robotic solutions.
 
-Even if \ac{ROS} has the term "Operating System" in the name it acts at the top of a classic operating system like GNU/Linux.
+Even if \ac{ROS} has the term "Operating System" in the name it acts at the top of a classic operating system like GNU/Linux as middleware between sensors and high level applications.
 The supported, most used and best tested distribution to use with \ac{ROS} is Ubuntu \cite{rosInstallationOS}.
 
 The framework can installed with a different amount of packages where the base installation only provides the necessary parts for building, packaging and communication.
@@ -56,11 +58,11 @@ A node can publish into a topic, which mean it provides information, and subscri
 The number of subscribed topics and topics to publish are not limited, so that it is possible to get information from e.g. multiple sensors and compute them.
 
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.30\textwidth]{img/ros_master/ros_master1.png}
-	\includegraphics[width=0.30\textwidth]{img/ros_master/ros_master2.png}
-	\includegraphics[width=0.30\textwidth]{img/ros_master/ros_master3.png}
-	\caption{The process how a camera node informs the ROS-master about the advertisement of information in the images topic and an other image viewer node subscribe to the same topic which leads to a peer-to-peer connection over the images topic.}
+    \centering
+    \includegraphics[width=0.30\textwidth]{img/ros_master/ros_master1.png}
+    \includegraphics[width=0.30\textwidth]{img/ros_master/ros_master2.png}
+    \includegraphics[width=0.30\textwidth]{img/ros_master/ros_master3.png}
+    \caption{The process how a camera node informs the ROS-master about the advertisement of information in the images topic and an other image viewer node subscribe to the same topic which leads to a peer-to-peer connection over the images topic.}
     \label{fig:ros_master}
 \end{figure}
 
@@ -76,10 +78,10 @@ ROS provides messages for the most common usages but they can also be custom mad
 Each topic is strongly related to a message type, even if the type is not checked by the ROS-master.
 
 \begin{wrapfigure}[10]{O}{0.4\textwidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{img/ros_master/service.png}
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/ros_master/service.png}
 
-	\caption{A service invocation is not related to a topic and usually is not a constant flow of messages}
+    \caption{A service invocation is not related to a topic and usually is not a constant flow of messages}
     \label{fig:service_invocation}
 \end{wrapfigure}
 
@@ -112,7 +114,19 @@ To make the process of writing and reading into bag files efficient the messages
 To have the ability to invest \ac{ROS} bags without installing \ac{ROS}, a programmatic API is provided to iterate over the messages in a \ac{ROS} bag \cite{rosBag}.
 
 
-\section{Matlab}\label{sec:matlab}
-	\subsection{ROS Toolbox}\label{ssec:rosToolbox}
-	\subsection{Data Formats}\label{ssec:dataFormats}
+\section{MATLAB}\label{sec:matlab}
+MATLAB stands for Matrix Laboratory and is a computing environment with it's own programming language.
+It's originally designed by Cleve Moler to give his students easy access to LINPACK and EISPACK which are Fortran packages to solve Eigensystem and Linear Equation problems.
+Later it got rewritten and extended in C from Jack Little and Steve Bangert.
+The main extensions where functions, toolboxes and graphics.
+
+Today it is developed and distributed by MathWorks, which is founded by Moler, Little and Bangert.
+Over the time the number of toolboxes, tools and features increased.
+So did the number of users in universities.
+
+Together with Simulink, which is an other product from MathWorks, MATLAB is used at over 5000 universities and can be termed as the engineers language \cite{introductionMatlab}.
+
+\subsection{ROS Toolbox}\label{ssec:rosToolbox}
+The \ac{ROS} toolbox is the interface to \ac{ROS} for MATLAB and Simulink and provides the possibilities to create nodes and process the messages from a \ac{ROS} network.
+It also provides functions to read from \ac{ROS} bags and handling standard message types.
 
