@@ -27,9 +27,12 @@
 
 \subsection{Stereo Camera}\label{ssec:HWstereoCamera}
 
+\todo{add infos about stereo camera}
 \subsection{IMU}\label{ssec:HWIMU}
+\todo{add infos about IMU}
 
 \subsection{LiDAR}\label{ssec:HWLiDAR}
+\todo{add infos about lidar}
 
 \section{ROS}\label{sec:ros}
 \ac{ROS} is initial developed by \ac{STAIR} as a prototype of a flexible and dynamic framework for personal robots.
@@ -57,13 +60,12 @@ Also the communication is organized in topics which have a specific type of info
 A node can publish into a topic, which mean it provides information, and subscribe a topic to get information.
 The number of subscribed topics and topics to publish are not limited, so that it is possible to get information from e.g. multiple sensors and compute them.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.30\textwidth]{img/ros_master/ros_master1.png}
     \includegraphics[width=0.30\textwidth]{img/ros_master/ros_master2.png}
     \includegraphics[width=0.30\textwidth]{img/ros_master/ros_master3.png}
-    \caption{The process how a camera node informs the ROS-master about the advertisement of information in the images topic and an other image viewer node subscribe to the same topic which leads to a peer-to-peer connection over the images topic.}
-    \label{fig:ros_master}
+    \caption{The process how a camera node informs the ROS-master about the advertisement of information in the images topic and an other image viewer node subscribe to the same topic which leads to a peer-to-peer connection over the images topic.}\label{fig:ros_master}
 \end{figure}
 
 The advertisement and subscriptions are managed by the ROS-Master which holds the information to establish the peer-to-peer connection.
@@ -94,20 +96,23 @@ But nodes can also establish a persistent connection to a service, which causes 
 
 \subsection{Visualization}\label{ssec:visualization}
 
-In ROS the visualization of data is realized in the tool named RVIZ.
-To the user RVIZ itself acts as a host application for different plugins where each message type has it's own plugin.
-For ROS RVIZ acts as a normal node so that the individual plugins needs to be configured to subscribe to the relevant topics and how the visualization should look like.
+In ROS the visualization of data is realized in the tool named \texttt{RVIZ}.
+To the user \texttt{RVIZ} itself acts as a host application for different plugins where each message type has it's own plugin.
+For ROS \texttt{RVIZ} acts as a normal node so that the individual plugins needs to be configured to subscribe to the relevant topics and how the visualization should look like.
 
-RVIZ provides a number of plugins for the standard messages, but one can also develop their own plugins to visualize the custom messages.
+\texttt{RVIZ} provides a number of plugins for the standard messages, but one can also develop their own plugins to visualize the custom messages.
+
+The visualization always happens with respect to one coordinate frame from the data.
+To calculate the position of one measurement in the frame of another measurement \texttt{RVIZ} takes a lookup in the \texttt{\textbackslash tf} (transformation) topic which is dedicated to transformations between different frames.
 
 \subsection{Data Recording}\label{ssec:dataRecording}
 
 The ability to record and playback data is a crucial part of ROS.
 Since all available data in ROS are exchanged via topics one just needs to subscribe to the topics witch holds the data that should be recorded.
 The file format to save the records is typical a bag.
-A bag is created with a tool like rosbag.
+A bag is created with a tool like \texttt{rosbag}.
 The tool subscribes to the wanted topics and writes the messages into the bag file, as they come.
-After finishing the recording a bag file can be palyed back with the same tool.
+After finishing the recording a bag file can be played back with the same tool.
 For the rest of the ROS network it behaves like the messages are published by the original nodes, which makes the handling very easy.
 
 To make the process of writing and reading into bag files efficient the messages are not saved as messages but in the same representation as in the network transport layer.
@@ -124,7 +129,7 @@ Today it is developed and distributed by MathWorks, which is founded by Moler, L
 Over the time the number of toolboxes, tools and features increased.
 So did the number of users in universities.
 
-Together with Simulink, which is an other product from MathWorks, MATLAB is used at over 5000 universities and can be termed as the engineers language \cite{introductionMatlab}.
+Together with Simulink, which is an other product from MathWorks, MATLAB is used at over 5000 universities and can be termed as the engineers language~\cite{introductionMatlab}.
 
 \subsection{ROS Toolbox}\label{ssec:rosToolbox}
 The \ac{ROS} toolbox is the interface to \ac{ROS} for MATLAB and Simulink and provides the possibilities to create nodes and process the messages from a \ac{ROS} network.

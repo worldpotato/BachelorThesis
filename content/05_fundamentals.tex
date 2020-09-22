@@ -12,16 +12,16 @@ Furthermore the principals of localization and map creating with help of these s
 \end{wrapfigure}
 
 The main purpose of mobile mapping systems is to create a new map of an unknown environment with a portable platform.
-These platforms can be attached to very small robots but also on bigger cars or even plains depending on their purpose.
-A lot of mobile mapping systems use more than one sensor type to combine the advantages of each sensor to improve the result.
-% The principals behind the most common sensors for indoor mobile mapping platforms are discussed in section \ref{sec:messurementPrinciples}.
+These platforms can be attached to very small robots but also on bigger cars or even plains, depending on their purpose.
+A lot of mobile mapping systems use more than one sensor type to use the advantages of each sensor.
+The characteristics of most common sensors for mobile mapping systems are explained in section \ref{sec:messurementPrinciples}.
 
 To create a map it is crucial to know the own position.
-The localization can be done either global with the help of \ac{GNSS} or related to a map frame by solving the \ac{SLAM} problem.
-While \ac{GNSS} can only be used in environment where satellite connections are possible the \ac{SLAM} algorithm can be used whenever it is possible to collect data about the surrounding.
-In \ac{SLAM} the mobile mapping platform collects data from their sensors and creates a map from these.
-At the same time it uses these collected data to deduce it's location, but because the sensors doesn't measure the absolute position it's only possible to estimate the current location.
-For the estimation it's not necessary to know any a priori information of location \cite{durrant-Whyte2006}
+The localization can be done either global with the help of \ac{GNSS} or related to a local frame by solving the \ac{SLAM} problem.
+While \ac{GNSS} can only be used in environments where satellite connections are possible the \ac{SLAM} algorithm can be used whenever it is possible to collect data about the surrounding.
+In \ac{SLAM} the mobile mapping platform collects data from their sensors, stores them as a map while it deduce it's location at the same time.
+That location can only be estimated because the sensors only measure the position related to the map and not an absolute position like \ac{GNSS}.
+But for that estimation it is not not necessary to know any a priori information of location\cite{durrant-Whyte2006}.
 
 The process of \ac{SLAM} is visualized in figure \ref{fig:slam}.
 It shows how the platform estimates the position of it self and the detected landmarks at the time instant $k$ by using the following quantities\cite{durrant-Whyte2006}:
@@ -42,8 +42,6 @@ Together with these vectors the following sets are defined:
 	\item[\boldmath$Z_{0:k}=\{z_0, z_1, z_2, \cdots , z_k\}$] vector with all observations of the landmarks
 \end{labeling}
 
-
-\todo{map matching}
 \todo{kalman filter}
 
 \section{Messurement Principles}\label{sec:messurementPrinciples}
@@ -67,7 +65,7 @@ This method bases on the reflection of the laser light but not all materials ref
 These echoes can be used to "look through" some materials like leaves. \todo{add source}
 
 The range measurements are highly accurate but the more dimensions the more time is needed for one full measurement.
-E.g. the Z+F PROFILER\circledR{} 9012\todo{add source} needs $20.41\si{ms}$ for a 2D scan but the Z+F IMAGER\circledR{} 5016 needs at least $22\si{s}$.
+E.g. the Z+F PROFILER\circledR{} 9012\cite{z+fLaserProfiler} needs $20.41\si{ms}$ for a 2D scan but the Z+F IMAGER\circledR{} 5016 needs at least $22\si{s}$.
 
 The output of a \ac{LiDAR} sensor depends on the number of dimensions they measure.
 All of them measure a distance but for each additional dimension one angle is added.
@@ -132,10 +130,10 @@ The matching between the objects can either be done manual or automatically whil
 A basic \ac{IMU} measures the linear acceleration using accelerometer and gyroscope to detect the rotational rate.
 Typically these are measured over three perpendicular axis.
 Modern \ac{IMU}s also use magnetometer to measure the heading and barometer to estimate the hight.
-With all these information the orientation of the \ac{IMU} can be estimated by fusing them.\cite{kim2004}
+With all these information the orientation of the \ac{IMU} can be estimated by fusing them\cite{kim2004}.
 
 \ac{IMU}s tend to drift over the time because even very small errors or noises have a big impact during the integration process.
-But the models how to measure the errors of gyroscope and accelerometer are described in detail by Titteron and Weston. \cite{titterton2005}
+But the models how to measure the errors of gyroscope and accelerometer are described in detail by Titteron and Weston\cite{titterton2005}.
 
 Even more advanced \ac{IMU}s use \ac{GNSS} to improve their position.
 That can be done by direct or indirect integration.
