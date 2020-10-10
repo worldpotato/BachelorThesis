@@ -10,7 +10,7 @@ But the most third party \ac{ROS} nodes can be found on \href{https://github.com
 The vendors of our sensors provide a \ac{ROS} node for their sensors so that we only need to install drivers and build the \ac{ROS} nodes.
 To this moment, we can collect the measurements from the sensors and can access them from one \ac{ROS} network but each node needs to be started individually and on every new installation could have another version of driver or \ac{ROS} node.
 
-To tackle the problems of different versions we created a structure of repositories where each repository holds a specific part and the main repository includes the other repositories.
+To tackle the problems of different versions we clone the nodes in a structure of repositories where each repository holds a specific part and the main repository includes the other repositories.
 The modular approach makes it possible to exchange a single sensor and freeze the software version of the node by cloning the repository from the vendor into a own repository.
 The main repository also holds scripts to install the drivers.
 Also launch files for different operations in the main repository makes is easier to start the ROS system with only one command.
@@ -41,7 +41,6 @@ Each of the bag files can be handled as a independent record so that one can jus
 To have similar, reusable and exchangeable bag files it is a good practice to write a script for the recording.
 In this script all parameter are specified together with all topics.
 So it only needs to specify the name of the bag file and the script will do everything to record the data.
-This script is located in the rosbag-repository to have an easy access.
 
 \subsection{Visualization}\label{ch:realization:ssec:visualization}
 
@@ -84,10 +83,7 @@ The repository dedicated for data processing contains a template node to provide
 
 \subsection{Offline}\label{ch:realization:ssec:offline}
 
-To process the recorded measurements offline we developed a MATLAB application to select the bag file, topics output directory and time of the messages which should be extracted.
-The MATLAB application provides a graphical interface build with the MATLAB App Designer and can be installed within MATLAB.
-We developed the application as a modular system which which provides an interface to use it in other projects.
-This can be used by including the related repository into the MATLAB path.
+To process the recorded measurements offline we use the MATLAB App Designer to develop a graphical user interface which is then installed as application in MATLAB.
+In this application we use the ROS toolbox to extract single messages from bag files.
+But we wrap the methods of the ROS toolbox in a own method which we use in the application and in independent programs or just to save the extracted messages as \texttt{*.mat} files in the output directory.
 
-The application take advantage of the selects the topics which are chosen from the user and saves the last message published at the user given time.
-The messages are saved as \texttt{*.mat} files in the output directory and collected in a cell array which is returned.

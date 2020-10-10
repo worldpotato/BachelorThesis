@@ -1,1 +1,36 @@
 \chapter{Discussion and Outlook}\label{ch:discussionAndOutlook}
+
+The modular structure makes it possible to provide only single parts to students or to other scientist so that they don't need learn how to use the whole system.
+That's specially useful at lessons where students only need to use the already recorded data.
+In this case the lecturer can only provide the bags and the Matlab repository to the students.
+
+On the other side when an other scientist wants to record new ROS Bags the person don't need to download the old bag files but only the ROS part which reduces the download time and so the productivity. \todo{evtl script für record mit rein}
+
+The different launch files give the possibility to start the ROS node with different configurations makes it possible to use the node either headless or with the visualization.
+This is practical in experiments with embedded hardware without a big amount of computing power but still makes it possible to show the sensor outcome to students or just to verify the sensor configuration.
+Using a third launch file to start only the visualization makes it possible that the data coming from the bag file are visualized with a similar command like the visualization from the data coming directly from the sensors.
+Keeping the workflow similar makes it to use the ROS System.
+
+Keeping no dependencies between the senor ROS nodes makes it possible to replace single sensors without many costs even omit a sensor is no problem.
+This is necessary because not every sensor is used in every lesson.
+
+Even if the ROS nodes are not connected the data are connected by their coordinate frames and the transformations which are published in the \\tf topic.
+But the transformations are statical and only measured by hand which is good enough for a first impression.
+In future these static transformation should be calculated by registering the different data to another.
+
+Due to no calibration between the stereo camera and the thermal camera the thermal image is extended with a white border to colorize the point cloud.
+There is also no internal calibration from the thermal camera and no external calibration between the thermal camera and the stereo camera.
+With further development it should possible to create a point cloud which is entirely colored by the thermal camera.
+
+The MATLAB application is a uncomplicated and provides a easy way for users to extract single datapoints into a format which can be used in MATLAB.
+It can be used to get single datapoint for lessons or to test a new algorithm which is developed by a scientist.
+But it also shows basic infos about the bag file e.g. which data are contained or how long a bag file is.
+That speeds up the time until the bag files can be used in the university since it is not necessary to run ROS and only MATLAB is needed.
+
+Together with the MATLAB backend to extract single messages from inside another MATLAB program the MATLAB repository is a lightweight way to extract messages from ROS bags.
+
+Together with the setup scripts inside the ROS repository we provide a flexible and powerful software environment which can be used in teaching methods of mobile mapping and further experiments.
+
+It could be worthwhile to invest further time in integrating existing software in the environment.
+Setting it up as a docker container is also another possibility to make it more portable but also makes further development more complex.
+
