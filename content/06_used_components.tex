@@ -1,38 +1,42 @@
 \chapter{Used Components}\label{ch:usedComponents}
 \section{Sensors}\label{sec:sensors}
+
+The sensors are only described as far as necessary to reproduce the results.
+
 \subsection{Thermal Camera}\label{ssec:HWthermalCamera}
 
-\begin{table}[h]
-    \begin{tabular}{ll}
-        Optical resolution & 382 $\times$ 288 \\ \midrule
-        Detector & FPA, uncooled \SI{17}{\micro\meter} $\times$ \SI{17}{\micro\meter} \\ \midrule
-        Spectral range &  \SI{8}{\micro\meter} $-$ \SI{14}{\micro\meter} \\ \midrule
-        Temperature ranges & 
-        \begin{tabular}{@{}l@{}}\SI{-20}{\celsius} $-$ \SI{100}{\celsius}\\
-            \SI{0}{\celsius} $-$ \SI{250}{\celsius} \\
-            \SI{150}{\celsius}$-$ \SI{900}{\celsius}
-        \end{tabular} \\ \midrule
-        Frame rate & \SI{80}{\hertz} \\ \midrule
-        Thermal sensitivity (NETD) &
-        \begin{tabular}{@{}l@{}}
-            \SI{75}{\milli\kelvin} with \SI{29}{\degree} x \SI{}{\degree} FOV / F = 0,9 \\
-            \SI{75}{\milli\kelvin} with \SI{53}{\degree} x \SI{38}{\degree} FOV / F = 0,9 \\
-            \SI{75}{\milli\kelvin} with \SI{80}{\degree} x \SI{54}{\degree} FOV / F = 0,9 \\
-            \SI{0.1}{\kelvin} with \SI{18}{\degree} x \SI{14}{\degree} FOV / F = 1,1
-        \end{tabular} \\ \midrule
-        Accuracy & $\pm$ \SI{2}{\celsius} or $\pm${2}\% whichever is greater
-    \end{tabular}
-    \caption{Technical specification Optris PI400}
-\end{table}
+As thermal camera a PI400 from Optris is used.
+The PI400 has a uncooled $17\micro\meter \times 17\micro\meter$ sensor with a optical resolution of $382 \times 288$ pixel.
+In the spectral range of \SI{8}{\micro\meter} $-$ \SI{14}{\micro\meter} it has a temperature range of either \SI{-20}{\celsius} $-$ \SI{100}{\celsius} or \SI{0}{\celsius} $-$ \SI{250}{\celsius} or \SI{150}{\celsius}$-$ \SI{900}{\celsius} depending on the temperature in the field of view\cite{PI400}.
+
+Beside of the camera Optris also delivers a ROS node and provides the source code on GitHub\cite{OptrisROSNode}.
+The driver and \ac{SDK} can be downloaded on the Optris homepage.
+
 
 \subsection{Stereo Camera}\label{ssec:HWstereoCamera}
 
-\todo{add infos about stereo camera}
-\subsection{IMU}\label{ssec:HWIMU}
-\todo{add infos about IMU}
+The stereo camera comes from StereoLabs and is called ZED.
+The camera has a basis line of $120\milli\meter$ and provides up to $100$ depth images per second.
+Each depth image can have a resolution up to $1920 \times 1080$ pixels with a accuracy of $2\percent$ at a distance smaller than $3\meter$ and $4\percent$ for distances smaller than $15\meter$\cite{ZED}.
+
+The \ac{SDK} is provided on StereoLabs homepage and the ROS Node can be found on GitHub\cite{ZEDROSNode}.
 
 \subsection{LiDAR}\label{ssec:HWLiDAR}
-\todo{add infos about lidar}
+
+Hokuyo is the producer of the used \ac{LiDAR} of the type UTM-30LX.
+The sensor provides a field of view of $270\degree$ and a detection range from $0.1\meter$ to $30\meter$.
+As angular resolution are $0.25\degree$ specified\cite{UTM-30LX}.
+
+The software is provided in the same manner as for the previous sensors.
+The \ac{SDK} is provided as download at the producers homepage and the ROS node is published on GitHub\cite{URG_node}
+
+\subsection{IMU}\label{ssec:HWIMU}
+
+The IMU is produced by Xsens and from the type MTi-G-710.
+Xsens equips the MTi-G-710 with several sensors which are gyroscope, magnetometer, barometer, GNSS and accelerometer.
+All measurements are published by a frequency up to $2\kilo\hertz$\cite{IMU}.
+
+The ROS node is not published in the common way, the source code for the ROS node is integrated in the \ac{SDK} which can be downloaded at the Xsens homepage.
 
 \section{ROS}\label{sec:ros}
 \ac{ROS} is initial developed by \ac{STAIR} as a prototype of a flexible and dynamic framework for personal robots.
