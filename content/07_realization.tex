@@ -1,15 +1,89 @@
-\chapter{Realization}
-\section{Data Acquisition}
-	Wie werden die Daten der Sensoren erfasst und vom software environment verarbeitet. Dabei immer darauf eingehen warum ROS.
-	\subsection{Data Exchange}
-	Wie kommen Daten von den Sensoren (publisher) zu den weiter verarbeitenden Nodes (subscriber). Warum ist das gut so.
-	\subsection{Storing Data}
-	Hier möchte ich vor allem auf die Bag file eingehen.
-\subsection{Visualization}
-	Die Visualisierung ist recht interessant, da sie einen ersten anhaltspunkt gibt wie die Daten aussehen. Außerdem ist es für den Nutzen im Lehrbetrieb der Hochschule gut den Studenten zu verdeutlichen was die Sensoren für Daten erzeugen und wie diese Aussehen.
-	Zudem passiert dafür noch einige Transformationen und man kann hier noch ein paar Vorteile von Ros erwähnen.
-\section{Data Processing}
-	Wie werden die Daten nach dem Abspeichern als Bag file genutzt - Matlab part
-	Außerdem warum Matlab genutzt wurde
-\subsection{Online}
-\subsection{Offline}
+\chapter{Realization}\label{ch:realization}
+
+In this chapter it will be described how the used components (chapter\ref{ch:usedComponents}) are combined to create a software environment for mobile thermal mapping solutions.
+
+\section{Software Deployment}\label{ch:realization:sec:softwareDeployment}
+
+We installed \ac{ROS} Melodic Morenia with the package manager of Ubuntu, because it was the long term supported distribution to the time of the research.
+But the most third party \ac{ROS} nodes can be found on \href{https://github.com}{Github.com} or directly at the vendors webpage and needs to be installed manually.
+
+The vendors of our sensors provide a \ac{ROS} node for their sensors so that we only need to install drivers and build the \ac{ROS} nodes.
+To this moment, we can collect the measurements from the sensors and can access them from one \ac{ROS} network but each node needs to be started individually and on every new installation could have another version of driver or \ac{ROS} node.
+
+To tackle the problems of different versions we clone the nodes in a structure of repositories where each repository holds a specific part and the main repository includes the other repositories.
+The modular approach makes it possible to exchange a single sensor and freeze the software version of the node by cloning the repository from the vendor into a own repository.
+The main repository also holds scripts to install the drivers.
+Also launch files for different operations in the main repository makes is easier to start the ROS system with only one command.
+All repositories are published in a GitLab group\cite{GitlabGroup}.
+
+\section{Data Acquisition}\label{ch:realization:sec:dataAcquisition}
+
+After starting the \ac{ROS} project the single nodes use the sensor drivers to collect the data.
+They use the predefined messages to prepare the measurements for publishing them and register the topics at the current ROS-Master.
+As one can see on the node graph the topics of one sensor are merged in meta topics.
+With these meta topics it's easier to distinguish between similar topics from different sensors.
+
+\subsection{Storing Data}\label{ch:realization:ssec:storingData}
+
+To store data \ac{ROS} provides the ROS bag file format which is described in Chapter~\ref{sec:ros}.
+Because we use different cameras which publish a lot of images the bags size increases very fast.
+To avoid a long download times the bags should not be stored inside the main repository.
+A special repository got created for handling big files which can be used if some old recordings should be used.
+
+To subscribe topics and save the messages we use the \texttt{rosbag} commandline tool.
+We tell \texttt{rosbag} which topics to subscribe and save to the bag file with commandline parameter.
+
+Considering the size of the bags and that some file systems like FAT32 can only handle files with a maximum size of 4GB the bag size should not exceed 4GB\@.
+This can be archived by an other parameter called \texttt{--split} and \texttt{--size} which specifies the maximum size of one file.
+Once a bag file reaches the maximum another bag file gets created.
+Each of the bag files can be handled as a independent record so that one can just use the specific file which holds a special scenario.
+
+To have similar, reusable and exchangeable bag files it is a good practice to write a script for the recording.
+In this script all parameter are specified together with all topics.
+So it only needs to specify the name of the bag file and the script will do everything to record the data.
+
+\subsection{Visualization}\label{ch:realization:ssec:visualization}
+
+In our case the visualization should only give the students an idea how the date looks like.
+It does not claim to be perfect accurate in terms of calibration between the different sensors.
+
+\texttt{RVIZ} is used to visualize the messages coming from the sensor nodes.
+So we configured the plugins to subscribe to the relevant topics and how the data should be visualized.
+
+Because all measurements are collected in it's own coordinate frame a connection between all frames need to be published to the \texttt{\textbackslash tf} topic.
+As a base how to connect the single frames we follow the principles defined in the REF 105~\cite{rosFrames} which makes it simple to combine multiple mobile mapping platforms in one ROS system.
+As defined in REF 105 all sensor frames are based on the \texttt{base\_link} and the \texttt{base\_link} is a child of \texttt{odom} and that again is a child of \texttt{map}.
+
+The Static transformation between \texttt{base\_link} and the sensors can be publish with a standard node by calling the node in a \texttt{.launch} file with the transformation parameter as parameter for the node.
+The same applies for the transformation between the \texttt{map} and \texttt{odom} frame.
+But the transformation between \texttt{odom} and \texttt{base\_link} frame is a dynamic transformation which represents the movement of the whole mobile mapping platform in the \texttt{odom} frame.
+So it depends on the measurements of the used IMU\@.
+
+To calculate and publish the transformation a ROS node called "robot\_localization" is used.
+This is an implementation of an extended kalmanfilter as ROS node which is open source and published under the BSD license by Charles River Analytics, Inc.
+We included the node in the same way like we included the sensor nodes and cloned the repository in sub repository where we can control updates.
+This node takes the measurements of the IMU and calculates the new transformation which is then published to the \texttt{\textbackslash tf} topic as transformation from the \texttt{odom} to the \texttt{base\_link} frame.
+The implementation is further discussed in the Proceedings of the 13th International Conference on Intelligent Autonomous Systems (IAS-13) by T. Moore and D. Stouch\cite{MooreStouchKeneralizedEkf2014}.
+
+To colorize the pointcloud with the image from the thermal camera the thermal image needs the same resolution as the depth image.
+That is archived by a ROS node which subscribes to the image topic from the thermal camera, adds a white border and publish the new image to a new topic.
+This new topic can be subscribed by \texttt{RVIZ} to colorize the point cloud.
+The size of the white border adjusted in the node and needs to be re-adjusted every time the observed scene changes.
+
+\section{Data Processing}\label{ch:realization:sec:dataProcessing}
+
+Processing data from mobile mapping platform in the context of teaching mostly means to demonstrate algorithm or giving students the option to implement the taught algorithm.
+We use MATLAB and the ROS toolbox as environment to provide a simple but also very flexible interface to ROS.
+Using MATLAB has the advantage that almost every student and scientist already know the programming language and that it supports all common operating systems.
+
+\subsection{Online}\label{ch:realization:ssec:online}
+
+The online processing is done by writing a node which subscribes to the different topics.
+The repository dedicated for data processing contains a template node to provide a uncomplicated start for new contributer or students.
+
+\subsection{Offline}\label{ch:realization:ssec:offline}
+
+To process the recorded measurements offline we use the MATLAB App Designer to develop a graphical user interface which is then installed as application in MATLAB.
+In this application we use the ROS toolbox to extract single messages from bag files.
+But we wrap the methods of the ROS toolbox in a own method which we use in the application and in independent programs or just to save the extracted messages as \texttt{*.mat} files in the output directory.
+

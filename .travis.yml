@@ -17,8 +17,8 @@ jobs:
       before_install:
         - sudo apt-get install texlive-full
       install:
-        - latexmk -pdf 00_master.tex
-        - mv 00_master.pdf ./output/bachelor-thesis.pdf
+        - latexmk -pdf main.tex
+        - mv main.pdf ./output/bachelor-thesis.pdf
     - stage: deploy-develop
       if: branch = develop AND type = cron
       before_deploy:

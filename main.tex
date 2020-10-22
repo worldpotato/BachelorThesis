@@ -1,0 +1,30 @@
+% Packages
+\include{preamble/packages}
+% Info about the document like author
+\include{preamble/documentInfos}
+% additional hyphenation
+\include{preamble/hyphenation}
+% ============= Begin of document =============
+\begin{document}
+
+% basic pages
+\include{content/01_title}
+\include{content/eidestattliche_erklaerung}
+\include{content/02_abstract}
+\include{content/03_tablesOfContent}
+\include{content/98_acronym}
+
+% Ends a page and force printing all defined but not printed floating objects on all following pages. If necessary a blank page will be inserted to make sure that the next page has an odd number.
+% \cleardoublepage{}
+
+\pagestyle{headings}
+
+\include{content/04_introduction}
+\include{content/05_fundamentals}
+\include{content/06_used_components}
+\include{content/07_realization}
+\include{content/08_results}
+\include{content/09_outlook}
+% references
+\bibliography{./bib/literature}
+\end{document}
