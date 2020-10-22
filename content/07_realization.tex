@@ -14,14 +14,14 @@ To tackle the problems of different versions we clone the nodes in a structure o
 The modular approach makes it possible to exchange a single sensor and freeze the software version of the node by cloning the repository from the vendor into a own repository.
 The main repository also holds scripts to install the drivers.
 Also launch files for different operations in the main repository makes is easier to start the ROS system with only one command.
-All repositories are published on Github. \todo{add git hub link}
+All repositories are published in a GitLab group\cite{GitlabGroup}.
 
 \section{Data Acquisition}\label{ch:realization:sec:dataAcquisition}
 
 After starting the \ac{ROS} project the single nodes use the sensor drivers to collect the data.
-They use the predefined messages to prepare the measurements for publishing them and register the topics at the current ROS-Master. \todo{include graph}
+They use the predefined messages to prepare the measurements for publishing them and register the topics at the current ROS-Master.
 As one can see on the node graph the topics of one sensor are merged in meta topics.
-With these meta topics it's easier to distinguish between similar topics from different sensors. \todo{Können die wie normale topics gehandhabt werden?}
+With these meta topics it's easier to distinguish between similar topics from different sensors.
 
 \subsection{Storing Data}\label{ch:realization:ssec:storingData}
 
@@ -54,7 +54,7 @@ Because all measurements are collected in it's own coordinate frame a connection
 As a base how to connect the single frames we follow the principles defined in the REF 105~\cite{rosFrames} which makes it simple to combine multiple mobile mapping platforms in one ROS system.
 As defined in REF 105 all sensor frames are based on the \texttt{base\_link} and the \texttt{base\_link} is a child of \texttt{odom} and that again is a child of \texttt{map}.
 
-The Static transformation between \texttt{base\_link} and the sensors can be publish with a standard node by calling the node in a \texttt{.launch} file with the transformation parameter as parameter for the node. \todo{add simple frames without sensors img}
+The Static transformation between \texttt{base\_link} and the sensors can be publish with a standard node by calling the node in a \texttt{.launch} file with the transformation parameter as parameter for the node.
 The same applies for the transformation between the \texttt{map} and \texttt{odom} frame.
 But the transformation between \texttt{odom} and \texttt{base\_link} frame is a dynamic transformation which represents the movement of the whole mobile mapping platform in the \texttt{odom} frame.
 So it depends on the measurements of the used IMU\@.
@@ -63,7 +63,7 @@ To calculate and publish the transformation a ROS node called "robot\_localizati
 This is an implementation of an extended kalmanfilter as ROS node which is open source and published under the BSD license by Charles River Analytics, Inc.
 We included the node in the same way like we included the sensor nodes and cloned the repository in sub repository where we can control updates.
 This node takes the measurements of the IMU and calculates the new transformation which is then published to the \texttt{\textbackslash tf} topic as transformation from the \texttt{odom} to the \texttt{base\_link} frame.
-The implementation is further discussed in the Proceedings of the 13th International Conference on Intelligent Autonomous Systems (IAS-13) by T. Moore and D. Stouch \cite{MooreStouchKeneralizedEkf2014}.
+The implementation is further discussed in the Proceedings of the 13th International Conference on Intelligent Autonomous Systems (IAS-13) by T. Moore and D. Stouch\cite{MooreStouchKeneralizedEkf2014}.
 
 To colorize the pointcloud with the image from the thermal camera the thermal image needs the same resolution as the depth image.
 That is archived by a ROS node which subscribes to the image topic from the thermal camera, adds a white border and publish the new image to a new topic.

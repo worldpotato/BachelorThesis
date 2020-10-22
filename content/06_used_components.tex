@@ -12,7 +12,6 @@ In the spectral range of \SI{8}{\micro\meter} $-$ \SI{14}{\micro\meter} it has a
 Beside of the camera Optris also delivers a ROS node and provides the source code on GitHub\cite{OptrisROSNode}.
 The driver and \ac{SDK} can be downloaded on the Optris homepage.
 
-
 \subsection{Stereo Camera}\label{ssec:HWstereoCamera}
 
 The stereo camera comes from StereoLabs and is called ZED.
@@ -39,7 +38,7 @@ All measurements are published by a frequency up to $2\kilo\hertz$\cite{IMU}.
 The ROS node is not published in the common way, the source code for the ROS node is integrated in the \ac{SDK} which can be downloaded at the Xsens homepage.
 
 \section{ROS}\label{sec:ros}
-\ac{ROS} is initial developed by \ac{STAIR} as a prototype of a flexible and dynamic framework for personal robots.
+\ac{ROS} is initial developed by Stanford AI Robot as a prototype of a flexible and dynamic framework for personal robots.
 It then got extended by Willow Garage, a robotics incubator.
 The used open-source license enabled a wide range of developers and researchers to contribute, which boosted the rise of \ac{ROS}.
 Another big moment was the handover from Willow Garage to the new founded \ac{OSRF} in 2012 \cite{rosHistory}.
@@ -83,9 +82,9 @@ The exchanged information are structured in messages which have predefined struc
 ROS provides messages for the most common usages but they can also be custom made.
 Each topic is strongly related to a message type, even if the type is not checked by the ROS-master.
 
-\begin{wrapfigure}[10]{O}{0.4\textwidth}
+\begin{wrapfigure}[10]{O}{0.3\textwidth}
     \centering
-    \includegraphics[width=0.4\textwidth]{img/ros_master/service.png}
+    \includegraphics[width=0.3\textwidth]{img/ros_master/service.png}
 
     \caption{A service invocation is not related to a topic and usually is not a constant flow of messages}
     \label{fig:service_invocation}

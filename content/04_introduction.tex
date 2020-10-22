@@ -5,6 +5,7 @@
 Mobile mapping solutions often use multiple sensors and combine the measurements of these sensors to a map and position.
 Common sensors for mobile mapping solutions are laser scanner, stereo camera and \ac{IMU}.
 But also \ac{GNSS} receiver are often used for outdoor applications.
+
 The sensors provide a wide range of different data.
 And using the provided data for positioning and map building requires different methods.
 
@@ -53,20 +54,14 @@ But other than the name implies \ac{ROS} is not a traditional operating system.
 Wrigley et al describe \ac{ROS} as a framework which is capable to be used for a lot of different hardware platforms.
 Thereby they discuss how \ac{ROS} provides a communication layer between different host operating systems and which tools \ac{ROS} provides to develop software for robotics.\cite{Quigley2009ROSAO}
 
-
-E.g.\ in \ac{ROS} a generalized implementation \todo{use this}
-Robotik-lokalization\cite{MooreStouchKeneralizedEkf2014}
-
-Syncron Koregistratrion\cite{Frank2019SyncKoreg} \todo{use this}
-
 \section{Aim of the Work}\label{sec:aimOfTheWork}
-With this work I want to show how a what it needs to develop a software environment for mobile mapping solutions.
-These intelligent systems should be used to not only collect the spatial information but also the temperature of the environment.
+With this work we want to show how to setup a reliable software environment for mobile mapping solutions which can be used from scientists in experiments but also to teach students the fundamentals of mobile mapping.
+These intelligent systems should be used to not only collect the spatial information but also the temperature of the environment and provide these information in a file format which can be used offline.
 
 \section{Structure of the Work}\label{sec:structure}
 
-To understand what kind of technology is used I want to explain the fundamentals [\ref{ch:fundamentals}] of the sensors and what mobile mapping means.
-Afterwards the fundamentals get real and the used components [\ref{ch:usedComponents}] get explained.
-Followed by a deep insight into the realization, further in how the data are acquired, visualized and distributed to all subscribers.
-The online and offline processing is discussed in after the acquisition.
+To understand what kind of technology is used we want to explain the fundamentals (Chapter~\ref{ch:fundamentals}) of the sensors and what mobile mapping means.
+Afterwards the fundamentals get real and the used components (Chapter~\ref{ch:usedComponents}) get explained.
+Followed by a deep insight into the realization, further in how the data are acquired, visualized and distributed to all components.
+The online and offline processing methods are treat after the acquisition methods got explained.
 As a last step the results are discussed together with further options.

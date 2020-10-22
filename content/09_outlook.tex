@@ -4,7 +4,7 @@ The modular structure makes it possible to provide only single parts to students
 That's specially useful at lessons where students only need to use the already recorded data.
 In this case the lecturer can only provide the bags and the Matlab repository to the students.
 
-On the other side when an other scientist wants to record new ROS Bags the person don't need to download the old bag files but only the ROS part which reduces the download time and so the productivity. \todo{evtl script für record mit rein}
+On the other side when an other scientist wants to record new ROS Bags the person don't need to download the old bag files but only the ROS part which reduces the download time and so the productivity.
 
 The different launch files give the possibility to start the ROS node with different configurations makes it possible to use the node either headless or with the visualization.
 This is practical in experiments with embedded hardware without a big amount of computing power but still makes it possible to show the sensor outcome to students or just to verify the sensor configuration.
@@ -14,7 +14,7 @@ Keeping the workflow similar makes it to use the ROS System.
 Keeping no dependencies between the senor ROS nodes makes it possible to replace single sensors without many costs even omit a sensor is no problem.
 This is necessary because not every sensor is used in every lesson.
 
-Even if the ROS nodes are not connected the data are connected by their coordinate frames and the transformations which are published in the \\tf topic.
+Even if the ROS nodes are not connected the data are connected by their coordinate frames and the transformations which are published in the \texttt{\\tf} topic.
 But the transformations are statical and only measured by hand which is good enough for a first impression.
 In future these static transformation should be calculated by registering the different data to another.
 
